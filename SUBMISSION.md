@@ -49,7 +49,14 @@ The primary goal was reducing manual effort while maintaining accounting accurac
 | What SLA is required?                                            | Processing within a few seconds per invoice is acceptable.                          | No real-time requirement was specified.                     |
 | Are there future multilingual requirements?                      | Current scope is Japanese invoices only.                                            | Assignment focuses on Japanese documents.                   |
 
----
+Also,
+
+How much is he willing to spend?
+How many invoices per day？ highest QPS, lowest QPS, higest amount of invoices sent,
+Is he willing to self-host LLM? or the office worker has a simple GPU ( for using self-hosted LLMs)
+Does data privacy matter to him? Option for self-hosting
+
+## But the biggest question is what is his budget and data privacy for self-hosting
 
 ## 3. Scoping decisions
 
@@ -320,7 +327,7 @@ depending on model choice.
 
 ```text
 Image validation: <1 sec
-OCR: 1–2 sec
+OCR: 1–2 sec + 2 min for cold start
 LLM extraction: 1–3 sec
 
 Total:
