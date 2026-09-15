@@ -1,0 +1,108 @@
+rules: fast_rules
+tuple_name: InvoiceData
+key_field: InvoiceNumber
+
+blocks:
+  - name: SellerInfo
+    label: 売り手情報
+    rows_constant: 1
+    fields:
+      - name: SellerName
+        type: str
+        required: true
+        label: 売り手名
+      - name: SellerAddress
+        type: str
+        label: 売り手住所
+      - name: SellerTaxId
+        type: str
+        label: 売り手登録番号
+
+  - name: BuyerInfo
+    label: 買い手情報
+    rows_constant: 1
+    fields:
+      - name: BuyerName
+        type: str
+        required: true
+        label: 買い手名
+      - name: BuyerAddress
+        type: str
+        label: 買い手住所
+      - name: BuyerTaxCode
+        type: str
+        label: 買い手登録番号
+
+  - name: Invoice
+    label: 請求書
+    rows_constant: 1
+    fields:
+      - name: InvoiceNumber
+        type: str
+        required: true
+        label: 請求書番号
+      - name: IssueDate
+        type: str
+        label: 発行日
+      - name: DueDate
+        type: str
+        label: 支払期日
+      - name: Currency
+        type: str
+        default: JPY
+        label: 通貨
+      - name: TotalAmount
+        type: str
+        label: 請求金額
+      - name: Subtotal
+        type: str
+        label: 小計
+      - name: TaxTotal
+        type: str
+        label: 消費税
+
+  - name: Item
+    label: 明細
+    rows_constant: n
+    ordinal_field: Ord
+    postprocess_hint: aggregation
+    fields:
+      - name: Ord
+        type: int
+        required: true
+        label: 行
+      - name: ItemName
+        type: str
+        label: 品名
+      - name: Quantity
+        type: float
+        label: 数量
+      - name: Unit
+        type: str
+        label: 単位
+      - name: UnitPrice
+        type: float
+        label: 単価
+      - name: LineAmount
+        type: float
+        label: 金額
+      - name: TaxRate
+        type: int
+        label: 税率(10/8)
+      - name: Notes
+        type: str
+        label: 備考
+
+pre_conditions:
+  - "field_for('Invoice.InvoiceNumber') is not None"
+post_conditions:
+  - "aggregate_total_cross_check() is truthful"
+
+strict_required:
+  - SellerInfo.SellerName
+  - BuyerInfo.BuyerName
+  - Invoice.InvoiceNumber
+  - Invoice.TotalAmount
+
+condition_field_required:
+  - Invoice.InvoiceNumber

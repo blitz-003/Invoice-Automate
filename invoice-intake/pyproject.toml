@@ -1,0 +1,28 @@
+[project]
+name = "invoice-intake"
+version = "0.1.0"
+description = "Kitsunex-style Japanese invoice intake: OCR -> LLM extraction -> resolution -> We graph persistence."
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110,<1.0",
+    "uvicorn[standard]>=0.29",
+    "pydantic>=2.6",
+    "pydantic-settings>=2.2",
+    "PyYAML>=6.0.1",
+    "openai>=1.30",
+    "python-multipart>=0.0.9",
+    "pymupdf>=1.24",
+    "Pillow>=10.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
